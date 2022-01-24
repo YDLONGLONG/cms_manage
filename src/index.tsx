@@ -1,8 +1,9 @@
 import ReactDOM from 'react-dom'
-import App from './App'
-import 'antd/dist/antd.css';	// 引入antd的样式
+import MyRouter from './router'
+//import 'antd/dist/antd.css';
+import './base.less'
 
 ReactDOM.render(
-  <App />,
+  <MyRouter />,
   document.getElementById("root")
 )
