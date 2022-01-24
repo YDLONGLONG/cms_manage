@@ -4,14 +4,21 @@ import { ReadOutlined, EditOutlined, UserOutlined, SelectOutlined } from '@ant-d
 import "./App.less"
 import { Outlet } from "react-router-dom";
 import MyHeader from "components/MyHeader";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-export default function App() {
+interface IProps{
+  key:number;
+}
+
+function App(props:IProps) {
+
   return (
     <Layout className="container">
-    <MyHeader />
+    <MyHeader key={props.key} />
     <Layout className="container_content">
       <Sider width={200}>
       <Menu
@@ -50,3 +57,19 @@ export default function App() {
   </Layout>
   );
 }
+
+const mapStateToProps = (state:{key:number})=>{
+  return{
+    key:state.key
+  }
+}
+
+const maoDispatchToProps= (dispatch:Dispatch)=>{
+  return{
+    changeKeyFn(){
+      dispatch({type:"changeKey"})
+    }
+  }
+}
+
+export default connect(mapStateToProps)(App)

@@ -1,9 +1,13 @@
 import ReactDOM from 'react-dom'
 import MyRouter from './router'
-//import 'antd/dist/antd.css';
 import './base.less'
+import {Provider} from 'react-redux'
+import store from 'store'
 
 ReactDOM.render(
-  <MyRouter />,
+  <Provider store={store}>
+  <MyRouter />
+  </Provider>
+  ,
   document.getElementById("root")
 )

@@ -1,14 +1,37 @@
-import React,{useState} from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import React from 'react';
+import { Form, Input, Button, message } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.less'
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
+import { LoginApi } from "request/api";
 
 const logo = require("assets/images/logo.jpg")
 
-export default function Login() {
+interface IRegisterLogin {
+  username: string;
+  password: string;
+}
 
-    const onFinish = (values: any) => {
+export default function Login() {
+    const navigate = useNavigate()
+
+    const onFinish = (values: IRegisterLogin) => {
       console.log('Success:', values);
+      LoginApi(values).then((res: any) => {
+        if (res.errCode === 0) {
+          message.success(res.message, 1.5);
+
+          localStorage.setItem('username',res.data.username);
+          localStorage.setItem('cms-token',res.data['cms-token']);
+          localStorage.setItem('avatar',res.data.avatar);
+
+          setTimeout(() => {
+            navigate("/")
+          })
+        } else {
+          message.error(res.message);
+        }
+      });
     };
   
     const onFinishFailed = (errorInfo: any) => {
@@ -32,14 +55,14 @@ export default function Login() {
         name="username"
         rules={[{ required: true, message: '请输入用户名!' }]}
       >
-        <Input placeholder='请输入用户名' />
+        <Input prefix={<UserOutlined className="site-from-item-icon" />} placeholder='请输入用户名' />
       </Form.Item>
 
       <Form.Item
         name="password"
         rules={[{ required: true, message: '请输入密码!' }]}
       >
-        <Input.Password placeholder='请输入密码' />
+        <Input.Password prefix={<LockOutlined className="site-from-item-icon" />} placeholder='请输入密码' />
       </Form.Item>
 
       <Form.Item>
@@ -48,7 +71,7 @@ export default function Login() {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" size='large' block>
-          Submit
+          登录
         </Button>
       </Form.Item>
     </Form>
