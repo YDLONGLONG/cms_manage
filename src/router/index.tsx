@@ -17,6 +17,7 @@ const routeArr: Iroute[] = [
       { path: "edit", component: lazy(() => import("../pages/Edit")) },
       { path: "list", component: lazy(() => import("../pages/List")) },
       { path: "means", component: lazy(() => import("../pages/Means")) },
+      { path: "namelist", component: lazy(() => import("../pages/NameList")) },
     ],
   },
   { path: "/login", component: lazy(() => import("../Login")) },
