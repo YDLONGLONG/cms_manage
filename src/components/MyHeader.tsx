@@ -51,7 +51,7 @@ export default function MyHeader() {
     
     return (
         <header>
-            <img src={Logo} height={50} alt="" />
+            <img src={Logo} height={50} width={50} alt="" />
             <Dropdown overlay={menu}>
                 <a className="ant-dropdown-link" href='!#' onClick={e => e.preventDefault()}>
                     <img src={avatar} width={40} style={{borderRadius:'50%',marginRight:'15px'}} alt="" />

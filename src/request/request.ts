@@ -8,7 +8,7 @@ interface AxiosOption {
 
 // 配置项
 const axiosOption: AxiosOption = {
-    baseURL: 'http://localhost:3001/manage',
+    baseURL: '/foo',
     timeout: 5000
 }
 
