@@ -24,6 +24,8 @@ export default function Login() {
           localStorage.setItem('username',res.data.username);
           localStorage.setItem('cms-token',res.data['cms-token']);
           localStorage.setItem('avatar',res.data.avatar);
+          localStorage.setItem('player',res.data.player);
+          localStorage.setItem('editable',res.data.editable);
 
           setTimeout(() => {
             navigate("/")

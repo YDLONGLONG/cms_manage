@@ -75,7 +75,7 @@ export default function Register() {
         </Form.Item>
 
         <Form.Item
-          name="password"
+          name="password1"
           rules={[{ required: true, message: '请确认密码!' }]}
         >
           <Input.Password prefix={<LockOutlined className="site-from-item-icon" />} placeholder='请确认密码' />

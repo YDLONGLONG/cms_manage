@@ -2,7 +2,7 @@ import React, {useState,useEffect} from "react";
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { ReadOutlined, EditOutlined, UserOutlined, SelectOutlined } from '@ant-design/icons';
 import "./App.less"
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import MyHeader from "components/MyHeader";
 import { connect } from "react-redux";
 //import { Dispatch } from "redux";
@@ -16,23 +16,41 @@ interface IProps{
 
 function App(props:IProps) {
   //定义侧边栏当前项的值
-  const [asidKey, setAsideKey] = useState("-1");
+  const [asidKey, setAsideKey] = useState("0");
+  const [bread, setBread] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
+
   //监听路由变化修改侧边栏当前值
   useEffect(()=>{
+    if(location.pathname==='/'){
+      navigate('/list')
+    }
     switch(location.pathname){
         case "/list":
         setAsideKey("1");
+        setBread("查看文章列表");
         break;
         case "/edit":
         setAsideKey("2");
+        setBread("文章编辑");
         break;
         case "/means":
         setAsideKey("3");
+        setBread("修改资料");
         break;
         case "/namelist":
         setAsideKey("4-1");
+        setBread("小编名单");
         break;
+        default:
+        setAsideKey("0");
+        setBread("");
+        break;
+    }
+    //路径有/edit就加载当前项
+    if(location.pathname.includes('/edit')){
+      setAsideKey("2");
     }
   },[location.pathname])
 
@@ -58,7 +76,7 @@ function App(props:IProps) {
             <Menu.Item key="3">
             <ReadOutlined /> <Link to={'/means'}>修改资料</Link>
             </Menu.Item>
-          <SubMenu key="4" icon={<UserOutlined />} title="管理员">
+          <SubMenu key="4" icon={<UserOutlined />} title="管理员" style={{display: localStorage.getItem('player')==='vip'?'block':'none'}}>
             <Menu.Item key="4-1">
             <SelectOutlined /> <Link to={'/namelist'}>小编名单</Link>
             </Menu.Item>
@@ -67,9 +85,8 @@ function App(props:IProps) {
       </Sider>
       <Layout style={{ padding: '0 24px 24px' }}>
         <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
+          <Breadcrumb.Item><Link to={'/'}>首页</Link></Breadcrumb.Item>
+          <Breadcrumb.Item>{bread}</Breadcrumb.Item>
         </Breadcrumb>
         <Content className="mycontent">
           {<Outlet />}
